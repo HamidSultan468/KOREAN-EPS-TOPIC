@@ -1,131 +1,169 @@
 import streamlit as st
+import time
 
-# ---------------------------------------------------------
-# Page Configuration
-# ---------------------------------------------------------
-st.set_page_config(
-    page_title="KR Korean EPS-Topik Pro Portal",
-    page_icon="🇰🇷",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# پیج سیٹنگز
+st.set_page_config(page_title="EPS-TOPIK Korean Master", page_icon="🇰🇷", layout="centered")
 
-# ---------------------------------------------------------
-# Custom Styling: Neon Glow, Glassmorphism & High-End UI
-# ---------------------------------------------------------
+# CSS ڈیزائننگ
 st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@400;600&display=swap');
-
-    .stApp {
-        background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
-        color: #e2e8f0;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    /* Glass Effect Containers */
-    .glass-card {
-        background: rgba(30, 41, 59, 0.4);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 20px;
-        padding: 25px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        margin-bottom: 20px;
-    }
-
-    /* Neon Buttons */
-    div.stButton > button {
-        width: 100%;
-        background: rgba(15, 23, 42, 0.8) !important;
-        color: #38bdf8 !important;
-        border: 2px solid #38bdf8 !important;
-        border-radius: 40px !important;
-        padding: 12px 25px !important;
-        font-family: 'Orbitron', sans-serif !important;
-        font-weight: 700 !important;
-        letter-spacing: 1px !important;
-        transition: all 0.3s ease !important;
-        box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
-    }
-
-    div.stButton > button:hover {
-        background: #38bdf8 !important;
-        color: #0f172a !important;
-        box-shadow: 0 0 25px rgba(56, 189, 248, 0.6) !important;
-        transform: translateY(-2px);
-    }
-    
-    .stat-text {
-        font-family: 'Orbitron', sans-serif;
-        color: #f8fafc;
-        font-size: 1.5rem;
-    }
-</style>
+    <style>
+    .main-header { font-size: 2.2rem; color: #38bdf8; text-align: center; font-weight: bold; margin-bottom: 20px; }
+    .sub-card { background-color: #0d1117; padding: 20px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.3); margin-bottom: 20px; }
+    </style>
 """, unsafe_allow_html=True)
 
-# ---------------------------------------------------------
-# Sidebar Navigation
-# ---------------------------------------------------------
-with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/south-korea.png", width=60)
-    st.title("EPS-Topik Hub")
-    st.caption("Korean Language Pro Portal")
+# Session States
+if 'quiz_started' not in st.session_state:
+    st.session_state.quiz_started = False
+if 'current_q' not in st.session_state:
+    st.session_state.current_q = 0
+if 'score' not in st.session_state:
+    st.session_state.score = 0
+
+# ٹیسٹ ڈیٹا بیس (4 آپشنز)
+listening_questions = [
+    {
+        "audio": "https://www.w3schools.com/html/horse.mp3",
+        "options": ["1. 의사 (ڈاکٹر)", "2. 학생 (طالب علم)", "3. 경찰관 (پولیس)", "4. 요리사 (شیف)"],
+        "correct": "2. 학생 (طالب علم)"
+    },
+    {
+        "audio": "https://www.w3schools.com/html/horse.mp3",
+        "options": ["1. 선생님 (استاد)", "2. 회사원 (ملازم)", "3. 의사 (ڈاکٹر)", "4. 학생 (طالب علم)"],
+        "correct": "1. 선생님 (استاد)"
+    }
+]
+
+reading_questions = [
+    {
+        "question": "다음 단어와 관계있는 것은 무엇입니까? [ 사과 , 바나나 , 수박 ]",
+        "options": ["1. 과일 (پھل)", "2. 가구 (فرنیچر)", "3. 옷 (کپڑے)", "4. 직업 (پیشہ)"],
+        "correct": "1. 과일 (پھل)"
+    },
+    {
+        "question": "다음 반대되는 단어를 고르십시오. [ 크다 (بڑا ہونا) ]",
+        "options": ["1. 많다 (زیادہ)", "2. 작다 (چھوٹا)", "3. 길다 (لمبا)", "4. 무겁다 (بھاری)"],
+        "correct": "2. 작다 (چھوٹا)"
+    }
+]
+
+# سائڈبار نیویگیشن
+st.sidebar.title("📌 Main Menu")
+menu = st.sidebar.radio("کوئی ایک ماڈیول منتخب کریں:", ["Home", "Textbooks", "Listening Test", "Reading Test", "Vocabulary"])
+
+st.markdown('<div class="main-header">🇰🇷 EPS-TOPIK Learning Platform</div>', unsafe_allow_html=True)
+
+# ------------------- TEXTBOOKS MODULE -------------------
+if menu == "Textbooks":
+    st.header("📚 EPS-TOPIK Official Textbooks")
+    st.write("نصابی کتاب کے تمام بنیادی فیچرز اور فائلز نیچے سے حاصل کریں:")
+
+    # ذیلی بٹنز (Tabs)
+    tab_read, tab_listen, tab_down, tab_up = st.tabs([
+        "📖 Reading Material", 
+        "🎧 Listening Audio", 
+        "⬇️ Download Books", 
+        "📤 Upload Custom Files"
+    ])
+
+    with tab_read:
+        st.subheader("📖 Read Textbooks Online")
+        st.info("کتاب 1 یا کتاب 2 کا مطالعہ یہاں سے کریں۔")
+        book_sel = st.selectbox("کتاب منتخب کریں:", ["Book 1 (Lesson 1-30)", "Book 2 (Lesson 31-60)"])
+        st.write(f"آپ اس وقت **{book_sel}** کھولی ہوئی ہے۔")
+        st.text_area("کتاب کا اہم پیراگراف یا سبق درج کریں:", "안녕하세요. 저는 پاکستان 사람입니다.", height=100)
+
+    with tab_listen:
+        st.subheader("🎧 Textbook Audio Tracks")
+        st.write("سبق کے مطابق آڈیو سنیں:")
+        track = st.selectbox("ٹریک نمبر منتخب کریں:", [f"Track {i}" for i in range(1, 11)])
+        st.audio("https://www.w3schools.com/html/horse.mp3")
+
+    with tab_down:
+        st.subheader("⬇️ Download PDF Textbooks")
+        st.write("سرکاری پی ڈی ایف بکس ڈاؤن لوڈ کریں:")
+        col1, col2 = st.columns(2)
+        with col1:
+            st.download_button("📖 Download Book 1 PDF", data="Book 1 Content Placeholder", file_name="EPS_Book_1.pdf")
+        with col2:
+            st.download_button("📖 Download Book 2 PDF", data="Book 2 Content Placeholder", file_name="EPS_Book_2.pdf")
+
+    with tab_up:
+        st.subheader("📤 Upload Custom Materials")
+        st.write("اپنی نوٹس یا آڈیو فائلز ہوسٹ/اپلوڈ کریں:")
+        uploaded_file = st.file_uploader("فائل منتخب کریں (PDF, MP3, PNG):", type=["pdf", "mp3", "png", "jpg"])
+        if uploaded_file is not None:
+            st.success(f"فائل '{uploaded_file.name}' کامیابی سے اپلوڈ ہو گئی۔")
+
+# ------------------- TEST MODULE (LISTENING & READING) -------------------
+elif menu in ["Listening Test", "Reading Test"]:
+    st.header(f"📝 EPS-TOPIK {menu}")
     
-    st.markdown("---")
-    
-    menu = st.radio(
-        "Main Navigation",
-        ["Home", "Textbooks", "Vocabulary", "Grammar", "Listening", "Online Quiz"],
-        index=0
-    )
-    
-    st.markdown("---")
-    st.subheader("Support")
-    if st.button("Rate Us"):
-        st.toast("Thank you for your feedback!", icon="⭐")
-    if st.button("Share Portal"):
-        st.toast("Link copied!", icon="🔗")
+    if not st.session_state.quiz_started:
+        st.markdown('<div class="sub-card">', unsafe_allow_html=True)
+        st.subheader("⚙️ Test Settings (انسٹرکٹر سیٹ اپ)")
+        
+        # مینوئل ٹائم ان پٹ (1 سے 600 سیکنڈ)
+        timer_setting = st.number_input("فی سوال مینوئل وقت درج کریں (سیکنڈز):", min_value=1, max_value=600, value=30)
+        
+        if st.button("🚀 ٹیسٹ شروع کریں"):
+            st.session_state.quiz_started = True
+            st.session_state.test_timer = timer_setting
+            st.session_state.current_q = 0
+            st.session_state.score = 0
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
 
-# ---------------------------------------------------------
-# Header Section
-# ---------------------------------------------------------
-st.markdown("""
-<div style="text-align: center;">
-    <h1 style="font-family: 'Orbitron', sans-serif; color: #f8fafc;">KR KOREAN EPS-TOPIK PRO</h1>
-    <p style="color: #94a3b8;">Master the Korean language with our advanced interactive portal.</p>
-</div>
-""", unsafe_allow_html=True)
+    else:
+        questions = listening_questions if menu == "Listening Test" else reading_questions
+        q_idx = st.session_state.current_q
 
-# Metrics
-c1, c2, c3 = st.columns(3)
-with c1: st.markdown('<div class="glass-card" style="text-align:center;"><div class="stat-text">12</div><p>Total Books</p></div>', unsafe_allow_html=True)
-with c2: st.markdown('<div class="glass-card" style="text-align:center;"><div class="stat-text">1,500+</div><p>Vocabulary</p></div>', unsafe_allow_html=True)
-with c3: st.markdown('<div class="glass-card" style="text-align:center;"><div class="stat-text">60+</div><p>Lessons</p></div>', unsafe_allow_html=True)
+        if q_idx < len(questions):
+            q = questions[q_idx]
+            st.subheader(f"سوال {q_idx + 1} / {len(questions)}")
+            st.caption(f"⏱️ اس سوال کے لیے وقت: {st.session_state.test_timer} سیکنڈز")
 
-# ---------------------------------------------------------
-# Dynamic Content
-# ---------------------------------------------------------
-if menu == "Home":
-    st.markdown('<div class="glass-card"><h3>Welcome to the Dashboard</h3><p>Select a category from the sidebar to start your learning journey.</p></div>', unsafe_allow_html=True)
+            if "audio" in q:
+                st.audio(q["audio"])
+            else:
+                st.write(f"### {q['question']}")
 
-elif menu == "Textbooks":
-    st.markdown('<div class="glass-card"><h3>Official Textbooks</h3></div>', unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.button("Download Book 1")
-    with col2:
-        st.button("Download Book 2")
+            # 4 آپشنز
+            user_choice = st.radio("درست جواب پر ٹک کریں:", q["options"], index=None, key=f"q_{q_idx}_{menu}")
 
-elif menu == "Vocabulary":
-    st.markdown('<div class="glass-card"><h3>Vocabulary Search</h3></div>', unsafe_allow_html=True)
-    st.text_input("Enter word to search...", placeholder="e.g. Doctor")
+            if st.button("Submit Answer / اگلا سوال"):
+                if user_choice:
+                    if user_choice == q["correct"]:
+                        st.success("✔ درست جواب!")
+                        st.session_state.score += 1
+                    else:
+                        st.error(f"✖ غلط جواب! درست جواب تھا: {q['correct']}")
+                    time.sleep(1.5)
+                    st.session_state.current_q += 1
+                    st.rerun()
+                else:
+                    st.warning("براہ کرم کسی ایک آپشن پر ٹک کریں!")
 
-elif menu == "Online Quiz":
-    st.markdown('<div class="glass-card"><h3>Practice Quiz</h3></div>', unsafe_allow_html=True)
-    ans = st.radio("What is the Korean word for 'Teacher'?", ["의사", "선생님", "회사원"], index=None)
-    if st.button("Submit Answer"):
-        if ans == "선생님":
-            st.success("Correct!")
         else:
-            st.error("Try again!")
+            # Automatic Final Result Screen
+            st.balloons()
+            st.header("📊 آٹومیٹک رزلٹ کارڈ")
+            total = len(questions)
+            percentage = round((st.session_state.score / total) * 100)
+
+            st.metric(label="حاصل کردہ نمبر (Score)", value=f"{percentage}%")
+            st.write(f"کل سوالات: **{total}** | درست جوابات: **{st.session_state.score}** | غلط / وقت ختم: **{total - st.session_state.score}**")
+
+            if st.button("🔄 دوبارہ ٹیسٹ شروع کریں"):
+                st.session_state.quiz_started = False
+                st.rerun()
+
+# ------------------- OTHER MODULES -------------------
+elif menu == "Vocabulary":
+    st.header("🔤 Korean Vocabulary")
+    st.write("1. 안녕하세요 - سلام")
+    st.write("2. 감사합니다 - شکریہ")
+
+else:
+    st.header("Welcome!")
+    st.write("سائڈبار سے اپنی پسند کا سیکشن منتخب کریں۔")
