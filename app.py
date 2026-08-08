@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- STRICT UNIFORM BUTTON CSS ---
+# --- STRICT CSS FOR EXACT EQUAL BUTTONS & GRID ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
@@ -20,7 +20,7 @@ st.markdown("""
         font-family: 'Rajdhani', sans-serif;
     }
 
-    /* Vibrant Gold 3D Title */
+    /* Vibrant Gold Title */
     .golden-title {
         font-family: 'Orbitron', sans-serif;
         font-size: 2.8rem;
@@ -73,50 +73,48 @@ st.markdown("""
         }
     }
 
-    /* Force EXACT SAME SIZE on ALL Streamlit Buttons */
+    /* Target ALL Streamlit Buttons to Force EXACT GRID SIZING */
+    div[data-testid="column"] {
+        padding: 0px 4px !important; /* کالمز کے بیچ برابر فاصلہ */
+    }
+
     div.stButton {
         width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
     }
 
     div.stButton > button {
         width: 100% !important;
-        height: 52px !important;               /* ایک جیسی اونچائی */
-        min-height: 52px !important;
-        max-height: 52px !important;
+        height: 55px !important;                  /* بالکل فکسڈ اونچائی */
         background: rgba(10, 15, 30, 0.85) !important;
-        border-radius: 25px !important;          /* پیارا سائیڈ راؤنڈ کٹو */
+        border-radius: 30px !important;             /* اوول / کیپسول شیپ */
         border: 2px solid #00f2fe !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 0.80rem !important;          /* ٹیکسٹ کو فٹ کرنے کے لیے متوازن سائز */
+        font-size: 0.78rem !important;             /* یکساں فاؤنٹ سائز */
         font-weight: 700 !important;
-        letter-spacing: 0.5px !important;
-        padding: 4px 8px !important;
+        text-align: center !important;
         animation: rgbGlow 6s infinite ease-in-out !important;
         transition: all 0.3s ease !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        white-space: normal !important;          /* اگر نام لمبا ہو تو ایڈجسٹ کرے */
-        word-break: break-word !important;
-        text-align: center !important;
+        padding: 2px 5px !important;
+        box-sizing: border-box !important;
     }
 
     div.stButton > button:hover {
-        transform: scale(1.03) translateY(-2px) !important;
+        transform: scale(1.04) translateY(-2px) !important;
         background: rgba(20, 30, 55, 0.95) !important;
-        box-shadow: 0 0 22px rgba(255, 255, 255, 0.7) !important;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.8) !important;
     }
 
-    /* Content Container */
+    /* Content Box */
     .neon-container {
         background: rgba(10, 14, 23, 0.8);
         border: 1.5px solid #00f2fe;
         border-radius: 16px;
         padding: 25px;
         box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-        margin-top: 20px;
+        margin-top: 25px;
     }
 
     /* Clean Styled Table for Vocabulary */
@@ -153,52 +151,52 @@ st.markdown("""
 st.markdown('<div class="golden-title">KR KOREAN EPS-TOPIK PRO</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-title">Next-Gen Language Learning Hub</div>', unsafe_allow_html=True)
 
-# Navigation State
+# Active State Tracker
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = "EPS Topik Books"
 
-# --- MAIN BUTTONS (LINE 1: 5 Buttons) ---
-row1_col1, row1_col2, row1_col3, row1_col4, row1_col5 = st.columns(5)
-with row1_col1:
-    if st.button("EPS Topik Books"): st.session_state.active_tab = "EPS Topik Books"
-with row1_col2:
-    if st.button("Reading"): st.session_state.active_tab = "Reading"
-with row1_col3:
-    if st.button("Listening"): st.session_state.active_tab = "Listening"
-with row1_col4:
-    if st.button("Grammar"): st.session_state.active_tab = "Grammar"
-with row1_col5:
-    if st.button("Practice Quiz"): st.session_state.active_tab = "Practice Quiz"
+# --- LINE 1: EXACT EQUAL 5 COLUMNS ---
+c1, c2, c3, c4, c5 = st.columns([1, 1, 1, 1, 1])
+with c1:
+    if st.button("EPS Topik Books", key="btn1"): st.session_state.active_tab = "EPS Topik Books"
+with c2:
+    if st.button("Reading", key="btn2"): st.session_state.active_tab = "Reading"
+with c3:
+    if st.button("Listening", key="btn3"): st.session_state.active_tab = "Listening"
+with c4:
+    if st.button("Grammar", key="btn4"): st.session_state.active_tab = "Grammar"
+with c5:
+    if st.button("Practice Quiz", key="btn5"): st.session_state.active_tab = "Practice Quiz"
 
-st.write("<div style='margin-bottom: 10px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='margin-top: 8px;'></div>", unsafe_allow_html=True)
 
-# --- MAIN BUTTONS (LINE 2: 5 Buttons) ---
-row2_col1, row2_col2, row2_col3, row2_col4, row2_col5 = st.columns(5)
-with row2_col1:
-    if st.button("Chatbot"): st.session_state.active_tab = "Chatbot"
-with row2_col2:
-    if st.button("Translation"): st.session_state.active_tab = "Translation"
-with row2_col3:
-    if st.button("Skill Test"): st.session_state.active_tab = "Skill Test"
-with row2_col4:
-    if st.button("Vocabulary"): st.session_state.active_tab = "Vocabulary"
-with row2_col5:
-    st.button("Empty 10", disabled=True)
+# --- LINE 2: EXACT EQUAL 5 COLUMNS ---
+c6, c7, c8, c9, c10 = st.columns([1, 1, 1, 1, 1])
+with c6:
+    if st.button("Chatbot", key="btn6"): st.session_state.active_tab = "Chatbot"
+with c7:
+    if st.button("Translation", key="btn7"): st.session_state.active_tab = "Translation"
+with c8:
+    if st.button("Skill Test", key="btn8"): st.session_state.active_tab = "Skill Test"
+with c9:
+    if st.button("Vocabulary", key="btn9"): st.session_state.active_tab = "Vocabulary"
+with c10:
+    st.button("Empty 10", key="btn10", disabled=True)
 
-# --- MAIN CONTENT DYNAMIC AREA ---
+# --- DYNAMIC CONTENT AREA ---
 st.markdown('<div class="neon-container">', unsafe_allow_html=True)
 
 # 1. EPS TOPIK BOOKS SECTION
 if st.session_state.active_tab == "EPS Topik Books":
     st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📚 EPS Topik Books Manager</h3>', unsafe_allow_html=True)
     
-    sub1, sub2, sub3 = st.columns(3)
+    sub1, sub2, sub3 = st.columns([1, 1, 1])
     with sub1:
-        st.button("📤 Upload PDF")
+        st.button("📤 Upload PDF", key="sub_up")
     with sub2:
-        st.button("📥 Download PDF")
+        st.button("📥 Download PDF", key="sub_down")
     with sub3:
-        st.button("✏️ Edit Text / Lesson")
+        st.button("✏️ Edit Text / Lesson", key="sub_edit")
         
     st.write("---")
     st.info("یہاں آپ اپنی تمام پی ڈی ایف بکس اور اسباق کا انتظام کر سکتے ہیں۔")
@@ -229,7 +227,7 @@ elif st.session_state.active_tab == "Practice Quiz":
         time_per_q = st.number_input("ہر سوال کے لیے وقت (سیکنڈز میں):", min_value=5, max_value=300, value=30)
         
     st.write("<br>", unsafe_allow_html=True)
-    if st.button("🚀 Start Custom Quiz"):
+    if st.button("🚀 Start Custom Quiz", key="start_q"):
         st.success(f"ٹیسٹ شروع ہو رہا ہے: {num_questions} سوالات | فی سوال {time_per_q} سیکنڈ کا ٹائمر!")
 
 # 6. CHATBOT SECTION
@@ -241,7 +239,7 @@ elif st.session_state.active_tab == "Chatbot":
 elif st.session_state.active_tab == "Translation":
     st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🌐 Translation Tool</h3>', unsafe_allow_html=True)
     st.text_area("متن درج کریں...", height=120)
-    st.button("Translate Text")
+    st.button("Translate Text", key="trans_btn")
 
 # 8. SKILL TEST SECTION
 elif st.session_state.active_tab == "Skill Test":
