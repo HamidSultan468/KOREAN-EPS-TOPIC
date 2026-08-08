@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- ADVANCED RGB ANIMATED & BRIGHT GOLD CSS ---
+# --- TARGETED RGB ANIMATED & BRIGHT GOLD CSS ---
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
@@ -24,10 +24,10 @@ st.markdown("""
     /* Ultra Bright Vibrant Gold 3D Title */
     .golden-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 3rem;
+        font-size: 2.8rem;
         font-weight: 900;
         text-align: center;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         background: linear-gradient(180deg, #ffffff 0%, #fff700 35%, #ffd700 70%, #ffaa00 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -44,36 +44,13 @@ st.markdown("""
         text-align: center;
         color: #00f2fe;
         font-family: 'Orbitron', sans-serif;
-        font-size: 1rem;
+        font-size: 0.95rem;
         letter-spacing: 2px;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
         text-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
     }
 
-    /* Stat Glow Cards */
-    .stat-card {
-        background: rgba(13, 17, 23, 0.7);
-        border: 1.5px solid #00f2fe;
-        border-radius: 12px;
-        padding: 15px;
-        text-align: center;
-        box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
-        transition: all 0.3s ease;
-    }
-    .stat-num {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: #00f2fe;
-        text-shadow: 0 0 10px #00f2fe;
-    }
-    .stat-label {
-        font-size: 0.85rem;
-        color: #94a3b8;
-        font-weight: 600;
-    }
-
-    /* Animated RGB Soft Glow Keyframes for Buttons */
+    /* Keyframes for Soft RGB Animated Glow */
     @keyframes rgbGlow {
         0% {
             border-color: #00f2fe;
@@ -97,16 +74,16 @@ st.markdown("""
         }
     }
 
-    /* Uniform & Equal Sized Neon Animated Buttons */
-    div.stButton > button {
+    /* Target ONLY Main Top Navigation Buttons to prevent messing PDF viewer */
+    div[data-testid="stHorizontalBlock"] div.stButton > button {
         width: 100% !important;
-        height: 48px !important;
+        height: 46px !important;
         background: rgba(10, 15, 30, 0.85) !important;
-        border-radius: 25px !important;
+        border-radius: 20px !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 0.88rem !important;
+        font-size: 0.82rem !important;
         font-weight: 700 !important;
-        letter-spacing: 1px !important;
+        letter-spacing: 0.5px !important;
         animation: rgbGlow 6s infinite ease-in-out !important;
         transition: all 0.3s ease !important;
         display: flex !important;
@@ -114,115 +91,188 @@ st.markdown("""
         justify-content: center !important;
     }
 
-    div.stButton > button:hover {
+    div[data-testid="stHorizontalBlock"] div.stButton > button:hover {
         transform: scale(1.03) translateY(-2px) !important;
         background: rgba(20, 30, 55, 0.95) !important;
         box-shadow: 0 0 22px rgba(255, 255, 255, 0.6) !important;
     }
 
-    /* Main Container Box */
+    /* Main Content Container */
     .neon-container {
         background: rgba(10, 14, 23, 0.8);
         border: 1.5px solid #00f2fe;
         border-radius: 16px;
         padding: 25px;
         box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
-        margin-top: 20px;
+        margin-top: 15px;
     }
 
-    .stTextArea textarea {
-        background-color: #080d1a !important;
-        color: #00f2fe !important;
-        border: 1px solid #00f2fe !important;
-        border-radius: 10px !important;
+    /* Clean Styled Table for Vocabulary */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 1rem;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #00f2fe;
+        color: #050508;
+        text-align: left;
+        font-weight: bold;
+        font-family: 'Orbitron', sans-serif;
+    }
+    .styled-table th, .styled-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+    }
+    .styled-table tbody tr {
+        background-color: rgba(15, 23, 42, 0.6);
+    }
+    .styled-table tbody tr:hover {
+        background-color: rgba(0, 242, 254, 0.1);
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- JS INJECTION ---
-try:
-    with open("script.js", "r", encoding="utf-8") as f:
-        js_code = f.read()
-    components.html(f"<script>{js_code}</script>", height=0)
-except Exception:
-    pass
-
-# --- BRIGHT GOLD HEADER ---
+# --- HEADER ---
 st.markdown('<div class="golden-title">KR KOREAN EPS-TOPIK PRO</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-title">Next-Gen Language Learning Hub</div>', unsafe_allow_html=True)
 
-# --- STATS ROW (3 Cards) ---
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.markdown('<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Total Books</div></div>', unsafe_allow_html=True)
-with c2:
-    st.markdown('<div class="stat-card"><div class="stat-num">1,500+</div><div class="stat-label">Vocabulary</div></div>', unsafe_allow_html=True)
-with c3:
-    st.markdown('<div class="stat-card"><div class="stat-num">60+</div><div class="stat-label">Lessons</div></div>', unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-# --- MAIN NAVIGATION BUTTONS (Equal Width 4 Columns) ---
-nav1, nav2, nav3, nav4 = st.columns(4)
-with nav1:
-    btn_textbooks = st.button("Textbooks")
-with nav2:
-    btn_vocab = st.button("Vocabulary")
-with nav3:
-    btn_grammar = st.button("Grammar")
-with nav4:
-    btn_quiz = st.button("Practice Quiz")
-
-# Navigation State Management
+# State Management for Navigation
 if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = "Textbooks"
+    st.session_state.active_tab = "EPS Topik Books"
 
-if btn_textbooks: st.session_state.active_tab = "Textbooks"
-if btn_vocab: st.session_state.active_tab = "Vocabulary"
-if btn_grammar: st.session_state.active_tab = "Grammar"
-if btn_quiz: st.session_state.active_tab = "Practice Quiz"
+# --- MAIN BUTTONS (LINE 1: 5 Buttons) ---
+row1_col1, row1_col2, row1_col3, row1_col4, row1_col5 = st.columns(5)
+with row1_col1:
+    if st.button("EPS Topik Books"): st.session_state.active_tab = "EPS Topik Books"
+with row1_col2:
+    if st.button("Reading"): st.session_state.active_tab = "Reading"
+with row1_col3:
+    if st.button("Listening"): st.session_state.active_tab = "Listening"
+with row1_col4:
+    if st.button("Grammar"): st.session_state.active_tab = "Grammar"
+with row1_col5:
+    if st.button("Practice Quiz"): st.session_state.active_tab = "Practice Quiz"
 
-# --- CONTENT AREA ---
+# --- MAIN BUTTONS (LINE 2: 5 Buttons) ---
+row2_col1, row2_col2, row2_col3, row2_col4, row2_col5 = st.columns(5)
+with row2_col1:
+    if st.button("Chatbot"): st.session_state.active_tab = "Chatbot"
+with row2_col2:
+    if st.button("Translation"): st.session_state.active_tab = "Translation"
+with row2_col3:
+    if st.button("Skill Test"): st.session_state.active_tab = "Skill Test"
+with row2_col4:
+    if st.button("Vocabulary"): st.session_state.active_tab = "Vocabulary" # Using 9th slot for Vocab
+with row2_col5:
+    st.button("Empty 10", disabled=True)
+
+# --- MAIN CONTENT DYNAMIC AREA ---
 st.markdown('<div class="neon-container">', unsafe_allow_html=True)
 
-if st.session_state.active_tab == "Textbooks":
-    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📚 EPS-Topik Official Textbooks</h3>', unsafe_allow_html=True)
-    st.markdown('<p style="color: #94a3b8;">Download official books directly:</p>', unsafe_allow_html=True)
+# 1. EPS TOPIK BOOKS SECTION
+if st.session_state.active_tab == "EPS Topik Books":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📚 EPS Topik Books Manager</h3>', unsafe_allow_html=True)
     
-    b1, b2, b3 = st.columns(3)
-    with b1:
-        st.button("Download Book 1")
-    with b2:
-        st.button("Download Book 2")
-    with b3:
-        st.button("Listening Tracks")
+    # Sub Buttons
+    sub1, sub2, sub3 = st.columns(3)
+    with sub1:
+        st.button("📤 Upload PDF")
+    with sub2:
+        st.button("📥 Download PDF")
+    with sub3:
+        st.button("✏️ Edit Text / Lesson")
         
-    st.markdown("---")
-    st.markdown('<h4 style="color: #00f2fe;">📄 Quick Paragraph Translator</h4>', unsafe_allow_html=True)
-    ko_text = st.text_area("کورین متن درج کریں...", height=100)
-    
-    tb1, tb2 = st.columns([1, 3])
-    with tb1:
-        if st.button("Translate"):
-            if ko_text:
-                st.info(f"ترجمہ: {ko_text}")
+    st.write("---")
+    st.info("یہاں آپ اپنی تمام پی ڈی ایف بکس اور اسباق کا انتظام کر سکتے ہیں۔")
 
-elif st.session_state.active_tab == "Vocabulary":
-    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🔤 Vocabulary Database</h3>', unsafe_allow_html=True)
-    vocab_data = [
-        {"Korean": "안녕하세요", "Meaning": "سلام / آپ کیسے ہیں؟"},
-        {"Korean": "감사합니다", "Meaning": "شکریہ"},
-        {"Korean": "선생님", "Meaning": "استاد"},
-        {"Korean": "학생", "Meaning": "طالب علم"}
-    ]
-    st.table(vocab_data)
+# 2. READING SECTION
+elif st.session_state.active_tab == "Reading":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📖 Reading Section</h3>', unsafe_allow_html=True)
+    st.write("ریڈنگ مٹیریل اور پیراگراف یہاں ظاہر ہوں گے۔")
 
+# 3. LISTENING SECTION
+elif st.session_state.active_tab == "Listening":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🎧 Listening Section</h3>', unsafe_allow_html=True)
+    st.write("آڈیو ٹریکس اور لسولنگ پریکٹس یہاں سے ہوگی۔")
+
+# 4. GRAMMAR SECTION
 elif st.session_state.active_tab == "Grammar":
-    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📖 Grammar Rules</h3>', unsafe_allow_html=True)
-    st.markdown("* **입니다 (Imnida):** یہ (Is/Am/Are) کے لیے استعمال ہوتا ہے۔")
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📘 Grammar Center</h3>', unsafe_allow_html=True)
+    st.write("کورین گرامر کے تمام قوانین اور تفصیلی وضاحتیں یہاں موجود ہیں۔")
 
+# 5. PRACTICE QUIZ SECTION (Manual Timing & Questions)
 elif st.session_state.active_tab == "Practice Quiz":
-    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📝 Practice Quiz Engine</h3>', unsafe_allow_html=True)
-    st.button("Start Online Test")
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📝 Practice Quiz Settings</h3>', unsafe_allow_html=True)
+    
+    col_q, col_t = st.columns(2)
+    with col_q:
+        num_questions = st.number_input("سوالات کی تعداد (Number of Questions):", min_value=1, max_value=100, value=20)
+    with col_t:
+        time_per_q = st.number_input("ہر سوال کے لیے وقت (سیکنڈز میں):", min_value=5, max_value=300, value=30)
+        
+    st.write("<br>", unsafe_allow_html=True)
+    if st.button("🚀 Start Custom Quiz"):
+        st.success(f"ٹیسٹ شروع ہو رہا ہے: {num_questions} سوالات | فی سوال {time_per_q} سیکنڈ کا ٹائمر!")
+
+# 6. CHATBOT SECTION
+elif st.session_state.active_tab == "Chatbot":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🤖 AI Korean Chatbot</h3>', unsafe_allow_html=True)
+    st.write("کورین زبان کی رہنمائی کے لیے اپنے سوالات پوچھیں۔")
+
+# 7. TRANSLATION SECTION
+elif st.session_state.active_tab == "Translation":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🌐 Translation Tool</h3>', unsafe_allow_html=True)
+    st.text_area("متن درج کریں...", height=120)
+    st.button("Translate Text")
+
+# 8. SKILL TEST SECTION
+elif st.session_state.active_tab == "Skill Test":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🛠️ Skill Test Module</h3>', unsafe_allow_html=True)
+    st.write("اسکل ٹیسٹ کی تیاری کے لیے مواد اور ویڈیوز۔")
+
+# 9. VOCABULARY SECTION (3 Columns Table)
+elif st.session_state.active_tab == "Vocabulary":
+    st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🔤 Vocabulary Table</h3>', unsafe_allow_html=True)
+    
+    # 3 Column Table Data
+    vocab_html = """
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Words (Korean)</th>
+                <th>Meaning in Urdu</th>
+                <th>Meaning in English</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>안녕하세요</td>
+                <td>سلام / آپ کیسے ہیں؟</td>
+                <td>Hello / How are you?</td>
+            </tr>
+            <tr>
+                <td>감사합니다</td>
+                <td>شکریہ</td>
+                <td>Thank you</td>
+            </tr>
+            <tr>
+                <td>선생님</td>
+                <td>استاد</td>
+                <td>Teacher</td>
+            </tr>
+            <tr>
+                <td>학생</td>
+                <td>طالب علم</td>
+                <td>Student</td>
+            </tr>
+        </tbody>
+    </table>
+    """
+    st.markdown(vocab_html, unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
