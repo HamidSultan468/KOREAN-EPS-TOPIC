@@ -9,59 +9,56 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- ADVANCED CYBERPUNK & GOLDEN 3D CSS ---
+# --- ADVANCED RGB ANIMATED & BRIGHT GOLD CSS ---
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
 
     /* Global Background */
     .stApp {
-        background: radial-gradient(circle at 80% 20%, #150a21 0%, #08070c 100%) !important;
+        background: radial-gradient(circle at 50% 10%, #150a21 0%, #050508 100%) !important;
         color: #e2e8f0;
         font-family: 'Rajdhani', sans-serif;
     }
 
-    /* 3D Gold Embossed Main Title */
+    /* Ultra Bright Vibrant Gold 3D Title */
     .golden-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 2.8rem;
+        font-size: 3rem;
         font-weight: 900;
         text-align: center;
-        letter-spacing: 2px;
-        background: linear-gradient(180deg, #ffe066 0%, #f59e0b 50%, #b45309 100%);
+        letter-spacing: 3px;
+        background: linear-gradient(180deg, #ffffff 0%, #fff700 35%, #ffd700 70%, #ffaa00 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 
-            0 2px 0 #78350f,
-            0 4px 0 #451a03,
-            0 6px 10px rgba(0, 0, 0, 0.8),
-            0 0 20px rgba(245, 158, 11, 0.4);
+            0 0 15px rgba(255, 247, 0, 0.8),
+            0 0 30px rgba(255, 215, 0, 0.6),
+            0 3px 0 #b7791f,
+            0 6px 0 #744210,
+            0 9px 15px rgba(0, 0, 0, 0.9);
         margin-bottom: 2px;
     }
 
     .sub-title {
         text-align: center;
-        color: #38bdf8;
+        color: #00f2fe;
         font-family: 'Orbitron', sans-serif;
-        font-size: 0.95rem;
-        letter-spacing: 1px;
+        font-size: 1rem;
+        letter-spacing: 2px;
         margin-bottom: 25px;
-        text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+        text-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
     }
 
     /* Stat Glow Cards */
     .stat-card {
-        background: rgba(15, 23, 42, 0.6);
+        background: rgba(13, 17, 23, 0.7);
         border: 1.5px solid #00f2fe;
         border-radius: 12px;
         padding: 15px;
         text-align: center;
-        box-shadow: 0 0 15px rgba(0, 242, 254, 0.25), inset 0 0 10px rgba(0, 242, 254, 0.1);
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
         transition: all 0.3s ease;
-    }
-    .stat-card:hover {
-        box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), inset 0 0 15px rgba(0, 242, 254, 0.2);
-        transform: translateY(-2px);
     }
     .stat-num {
         font-family: 'Orbitron', sans-serif;
@@ -76,44 +73,67 @@ st.markdown("""
         font-weight: 600;
     }
 
-    /* Neon Container Box */
-    .neon-container {
-        background: rgba(13, 17, 23, 0.75);
-        border: 1.5px solid #38bdf8;
-        border-radius: 16px;
-        padding: 25px;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
-        margin-top: 20px;
+    /* Animated RGB Soft Glow Keyframes for Buttons */
+    @keyframes rgbGlow {
+        0% {
+            border-color: #00f2fe;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4), inset 0 0 8px rgba(0, 242, 254, 0.2);
+            color: #00f2fe;
+        }
+        33% {
+            border-color: #a855f7;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.4), inset 0 0 8px rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+        }
+        66% {
+            border-color: #ffd700;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.4), inset 0 0 8px rgba(255, 215, 0, 0.2);
+            color: #ffea79;
+        }
+        100% {
+            border-color: #00f2fe;
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.4), inset 0 0 8px rgba(0, 242, 254, 0.2);
+            color: #00f2fe;
+        }
     }
 
-    /* Streamlit Custom Neon Buttons */
+    /* Uniform & Equal Sized Neon Animated Buttons */
     div.stButton > button {
         width: 100% !important;
-        background: rgba(15, 23, 42, 0.8) !important;
-        color: #38bdf8 !important;
-        border: 1.5px solid #38bdf8 !important;
-        border-radius: 20px !important;
-        padding: 10px 20px !important;
+        height: 48px !important;
+        background: rgba(10, 15, 30, 0.85) !important;
+        border-radius: 25px !important;
         font-family: 'Orbitron', sans-serif !important;
-        font-size: 0.9rem !important;
+        font-size: 0.88rem !important;
         font-weight: 700 !important;
         letter-spacing: 1px !important;
-        box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
+        animation: rgbGlow 6s infinite ease-in-out !important;
         transition: all 0.3s ease !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     div.stButton > button:hover {
-        background: #38bdf8 !important;
-        color: #090d16 !important;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.8), 0 0 30px rgba(56, 189, 248, 0.5) !important;
-        transform: scale(1.02);
+        transform: scale(1.03) translateY(-2px) !important;
+        background: rgba(20, 30, 55, 0.95) !important;
+        box-shadow: 0 0 22px rgba(255, 255, 255, 0.6) !important;
     }
 
-    /* Text Area Styling */
+    /* Main Container Box */
+    .neon-container {
+        background: rgba(10, 14, 23, 0.8);
+        border: 1.5px solid #00f2fe;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+        margin-top: 20px;
+    }
+
     .stTextArea textarea {
-        background-color: #0f172a !important;
+        background-color: #080d1a !important;
         color: #00f2fe !important;
-        border: 1px solid #38bdf8 !important;
+        border: 1px solid #00f2fe !important;
         border-radius: 10px !important;
     }
 </style>
@@ -127,11 +147,11 @@ try:
 except Exception:
     pass
 
-# --- 3D GOLD HEADER ---
+# --- BRIGHT GOLD HEADER ---
 st.markdown('<div class="golden-title">KR KOREAN EPS-TOPIK PRO</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-title">Next-Gen Language Learning Hub</div>', unsafe_allow_html=True)
 
-# --- STATS ROW (3 Neon Cards) ---
+# --- STATS ROW (3 Cards) ---
 c1, c2, c3 = st.columns(3)
 with c1:
     st.markdown('<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Total Books</div></div>', unsafe_allow_html=True)
@@ -142,7 +162,7 @@ with c3:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- MAIN NAVIGATION BUTTONS ROW ---
+# --- MAIN NAVIGATION BUTTONS (Equal Width 4 Columns) ---
 nav1, nav2, nav3, nav4 = st.columns(4)
 with nav1:
     btn_textbooks = st.button("Textbooks")
@@ -153,7 +173,7 @@ with nav3:
 with nav4:
     btn_quiz = st.button("Practice Quiz")
 
-# State Management for Navigation
+# Navigation State Management
 if 'active_tab' not in st.session_state:
     st.session_state.active_tab = "Textbooks"
 
@@ -162,7 +182,7 @@ if btn_vocab: st.session_state.active_tab = "Vocabulary"
 if btn_grammar: st.session_state.active_tab = "Grammar"
 if btn_quiz: st.session_state.active_tab = "Practice Quiz"
 
-# --- MAIN CONTENT AREA (NEON CONTAINER) ---
+# --- CONTENT AREA ---
 st.markdown('<div class="neon-container">', unsafe_allow_html=True)
 
 if st.session_state.active_tab == "Textbooks":
@@ -178,11 +198,14 @@ if st.session_state.active_tab == "Textbooks":
         st.button("Listening Tracks")
         
     st.markdown("---")
-    st.markdown('<h4 style="color: #38bdf8;">📄 Quick Paragraph Translator</h4>', unsafe_allow_html=True)
+    st.markdown('<h4 style="color: #00f2fe;">📄 Quick Paragraph Translator</h4>', unsafe_allow_html=True)
     ko_text = st.text_area("کورین متن درج کریں...", height=100)
-    if st.button("Translate / ترجمہ کریں"):
-        if ko_text:
-            st.info(f"ترجمہ: {ko_text}")
+    
+    tb1, tb2 = st.columns([1, 3])
+    with tb1:
+        if st.button("Translate"):
+            if ko_text:
+                st.info(f"ترجمہ: {ko_text}")
 
 elif st.session_state.active_tab == "Vocabulary":
     st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">🔤 Vocabulary Database</h3>', unsafe_allow_html=True)
@@ -200,6 +223,6 @@ elif st.session_state.active_tab == "Grammar":
 
 elif st.session_state.active_tab == "Practice Quiz":
     st.markdown('<h3 style="color: #00f2fe; font-family: Orbitron;">📝 Practice Quiz Engine</h3>', unsafe_allow_html=True)
-    st.button("🚀 Start Online Test")
+    st.button("Start Online Test")
 
 st.markdown('</div>', unsafe_allow_html=True)
