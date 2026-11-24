@@ -1,5 +1,7 @@
 import streamlit as st
-import base64
+
+from tabs import books, chatbot, grammar, listening, mock, practice, skill, translation, vocabulary
+from ui import inject_extra_css
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
@@ -107,6 +109,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# --- SHARED NEON STYLES FOR TAB CONTENT ---
+inject_extra_css()
+
 # --- HEADER ---
 st.markdown('<div class="golden-title">KR KOREAN EPS-TOPIK PRO</div>', unsafe_allow_html=True)
 st.markdown('<div class="sub-title">Next-Gen Language Learning Hub</div>', unsafe_allow_html=True)
@@ -151,83 +156,29 @@ with c8:
 with c9:
     if st.button("Vocabulary", key="nav_btn9"): st.session_state.active_tab = "Vocabulary"
 with c10:
-    st.button("Empty 10", key="nav_btn10", disabled=True)
+    if st.button("Mock Test", key="nav_btn10"): st.session_state.active_tab = "Mock Test"
+
 
 # --- MAIN CONTENT AREA ---
 st.markdown('<div class="neon-container">', unsafe_allow_html=True)
 
-# 1. EPS TOPIK BOOKS SECTION (RESTORED ORIGINAL STRUCTURE)
-if st.session_state.active_tab == "EPS Topik Books":
-    st.markdown('<h3 style="color: #00f2fe;">📚 EPS Topik Books Manager</h3>', unsafe_allow_html=True)
-    
-    sub1, sub2, sub3 = st.columns(3)
-    with sub1:
-        if st.button("Upload PDF", key="sub_up_btn"):
-            st.session_state.book_sub_action = "upload"
-    with sub2:
-        if st.button("Download PDF", key="sub_down_btn"):
-            st.session_state.book_sub_action = "download"
-    with sub3:
-        if st.button("Edit Text / Lesson", key="sub_edit_btn"):
-            st.session_state.book_sub_action = "edit"
-        
-    st.write("---")
-    
-    if st.session_state.book_sub_action == "upload":
-        st.markdown("<h4 style='color: #ffd700;'>📤 نئی بک اپلوڈ کریں (Upload PDF)</h4>", unsafe_allow_html=True)
-        uploaded_file = st.file_uploader("پی ڈی ایف فائل کا انتخاب کریں:", type=["pdf"])
-        
-        if uploaded_file is not None:
-            st.success(f"فائل '{uploaded_file.name}' کامیابی سے اپلوڈ ہو گئی ہے!")
-            
-            # Standard Streamlit PDF Display iFrame
-            base64_pdf = base64.b64encode(uploaded_file.read()).decode('utf-8')
-            pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="650" type="application/pdf"></iframe>'
-            st.markdown(pdf_display, unsafe_allow_html=True)
 
-    elif st.session_state.book_sub_action == "download":
-        st.markdown("<h4 style='color: #ffd700;'>📥 کتابیں ڈاؤنلوڈ کریں (Download PDF)</h4>", unsafe_allow_html=True)
-        st.download_button(
-            label="📄 EPS Topik Book 1 ڈاؤنلوڈ کریں",
-            data=b"Sample PDF Content",
-            file_name="EPS_Topik_Book_1.pdf",
-            mime="application/pdf"
-        )
-
-    elif st.session_state.book_sub_action == "edit":
-        st.markdown("<h4 style='color: #ffd700;'>✏️ سبق میں ترمیم کریں (Edit Text / Lesson)</h4>", unsafe_allow_html=True)
-        lesson_num = st.selectbox("سبق کا نمبر منتخب کریں:", [f"Lesson {i}" for i in range(1, 61)])
-        edited_text = st.text_area(f"{lesson_num} کے مواد میں ترمیم کریں:", height=150)
-        if st.button("محفوظ کریں"):
-            st.success("معلومات محفوظ کر لی گئی ہیں!")
-            
-    else:
-        st.info("اوپر دیے گئے بٹنوں (Upload, Download, Edit) پر کلک کر کے سبق اپلوڈ یا دیکھیں۔")
-
-# 2. OTHER TABS (STABLE)
-elif st.session_state.active_tab == "Reading":
+def render_reading():
     st.markdown('<h3 style="color: #00f2fe;">📖 Reading Section</h3>', unsafe_allow_html=True)
     st.radio("صحیح جواب منتخب کریں:", ["1. 가방", "2. 안경", "3. 모자", "4. 구두"])
 
-elif st.session_state.active_tab == "Listening":
-    st.markdown('<h3 style="color: #00f2fe;">🎧 Listening Section</h3>', unsafe_allow_html=True)
 
-elif st.session_state.active_tab == "Grammar":
-    st.markdown('<h3 style="color: #00f2fe;">📘 Korean Grammar Rules</h3>', unsafe_allow_html=True)
-
-elif st.session_state.active_tab == "Practice Quiz":
-    st.markdown('<h3 style="color: #00f2fe;">📝 Practice Quiz</h3>', unsafe_allow_html=True)
-
-elif st.session_state.active_tab == "Chatbot":
-    st.markdown('<h3 style="color: #00f2fe;">🤖 EPS-TOPIK Korean Assistant</h3>', unsafe_allow_html=True)
-
-elif st.session_state.active_tab == "Translation":
-    st.markdown('<h3 style="color: #00f2fe;">🌐 Instant Korean Translator</h3>', unsafe_allow_html=True)
-
-elif st.session_state.active_tab == "Skill Test":
-    st.markdown('<h3 style="color: #00f2fe;">🛠️ Skill Test Preparation</h3>', unsafe_allow_html=True)
-
-elif st.session_state.active_tab == "Vocabulary":
-    st.markdown('<h3 style="color: #00f2fe;">🔤 Vocabulary List</h3>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
+# Each tab lives in its own module under tabs/ (Reading is still inline above).
+TAB_RENDERERS = {
+    "EPS Topik Books": books.render,
+    "Reading": render_reading,
+    "Listening": listening.render,
+    "Grammar": grammar.render,
+    "Practice Quiz": practice.render,
+    "Chatbot": chatbot.render,
+    "Translation": translation.render,
+    "Skill Test": skill.render,
+    "Vocabulary": vocabulary.render,
+    "Mock Test": mock.render,
+}
+TAB_RENDERERS[st.session_state.active_tab]()
